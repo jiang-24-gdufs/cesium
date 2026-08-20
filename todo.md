@@ -12,3 +12,7 @@
 - frameState 是什么? 这个状态包含什么信息
 - 关联了什么其他的方法, 做了什么处理?
 协助我理解这个核心的加载3DTiles的核心流程, 与具体细节
+
+---
+
+怎么理解 Cesium3DTileset 和 Cesium3DTileset? Cesium3DTileset VS Cesium3DTile 这两个构造对象所描述的内容是什么? 他们的关系是什么? 他们可以理解为4叉树关系么? 和具体的瓦片文件又是怎么关联上的? 具体的发出请求的逻辑是在哪里? 怎么理解深入理解Tileset update 核心入口做了什么?
