@@ -2,6 +2,8 @@
 
 > 本文以本地 CBD 示例的实际链路为 S3M 侧事实来源，并与本仓库的 [3D Tiles 渲染调试指南](./debug-3dtiles-rendering.md)、[Tileset 与 Tile 的对象关系](./cesium3dtileset-vs-tile.md)及当前 `packages/engine/Source` 源码对照。文中“3D Tiles”特指 CesiumJS 内置 `Cesium3DTileset` 运行时；“S3M”特指相邻 `s3m-spec/S3M_SDK/S3M_JS` 中的 JavaScript SDK。
 
+S3M 主线以 [S3M 渲染原理主文档](../../s3m-spec/docs/s3m-rendering-guide.md) 为准；快速对比请先看 [S3M 与 3D Tiles 精简对照](./s3m-rendering-vs-3dtiles-architecture-summary.md)。本文保留逐方法的详细对照，适合需要继续追源码时使用。
+
 ## 结论先行
 
 S3M 和 3D Tiles 并不是两套完全无关的渲染思想。两者都把一个数据集作为 Cesium scene primitive，在每帧依据相机做 **可见性/LOD 选择 → 请求 → CPU/GPU 处理 → 向 `frameState.commandList` 提交命令**。CBD 的真实运行路径已验证为：
@@ -546,32 +548,3 @@ layer._requestTiles.length > 0
 // 3D Tiles：只在有待请求节点时暂停
 tileset._requestedTiles.length > 0
 ```
-
-## 10. 建议的研究路径
-
-1. **先跑通相同问题的两条路径。** 在 CBD 用 Network + P0 断点确认 `cbd.scp → .s3mb → DrawCommand`；在 3D Tiles 示例确认 `tileset.json → content → DrawCommand`。
-2. **第二步只研究 LOD。** 固定相机、屏幕尺寸和 `lodRangeScale`/SSE，记录选择树、请求 URL、命令数和内存，避免把格式差异和 LOD 差异混在一起。
-3. **第三步进入内容。** S3M 从 `S3ModelParser.parseBuffer` 对照 `s3m-spec/Specification/S3MB/`；3D Tiles 从 Content Factory 进入 `Model3DTileContent` 与 Model/glTF 管线。
-4. **最后研究特性。** 选择/BatchTable、透明和压缩纹理属于 CBD 的高价值路径；3D Tiles 的 style、metadata、implicit tiling、multiple contents、external tileset 和 skip-LOD 属于其通用框架路径。
-
-这样建立的不是“两个格式字段表”，而是一个可验证的架构映射：每个结论都能回到一个数据文件、一个源码断点和一帧中的 command 结果。
-
-## 11. 核心源码索引
-
-### CBD S3M SDK
-
-- [S3MTilesLayer.js](../../s3m-spec/S3M_SDK/S3M_JS/S3M_module/S3MTiles/S3MTilesLayer.js)：`loadConfig`、`update`、帧前/后生命周期。
-- [S3MLayerScheduler.js](../../s3m-spec/S3M_SDK/S3M_JS/S3M_module/S3MTiles/S3MLayerScheduler.js)：可见性、PageLOD 遍历、请求/处理/渲染队列。
-- [S3MTile.js](../../s3m-spec/S3M_SDK/S3M_JS/S3M_module/S3MTiles/S3MTile.js)：请求、S3MB 解析、状态机、资源转换。
-- [S3MPageLod.js](../../s3m-spec/S3M_SDK/S3M_JS/S3M_module/S3MTiles/S3MPageLod.js)：Distance / Pixel / GeometryError 细化条件。
-- [S3ModelParser.js](../../s3m-spec/S3M_SDK/S3M_JS/S3M_module/S3MParser/S3ModelParser.js)：S3MB 二进制解析。
-- [S3MContentParser.js](../../s3m-spec/S3M_SDK/S3M_JS/S3M_module/S3MTiles/S3MContentParser.js)：几何、材质、纹理和 RenderEntity 适配。
-- [S3MCacheFileRenderEntity.js](../../s3m-spec/S3M_SDK/S3M_JS/S3M_module/S3MTiles/Factory/S3MCacheFileRenderEntity.js)：CBD 的 command 创建、BatchTable 与提交。
-
-### Cesium 3D Tiles
-
-- [Cesium3DTileset.js](../packages/engine/Source/Scene/Cesium3DTileset.js)：顶层树、队列、处理、渲染和缓存。
-- [Cesium3DTile.js](../packages/engine/Source/Scene/Cesium3DTile.js)：节点可见性、SSE、请求、Content 生命周期与命令更新。
-- [Cesium3DTilesetTraversal.js](../packages/engine/Source/Scene/Cesium3DTilesetTraversal.js) 与 [Cesium3DTilesetBaseTraversal.js](../packages/engine/Source/Scene/Cesium3DTilesetBaseTraversal.js)：默认遍历与 LOD 判断。
-- [Cesium3DTileContentFactory.js](../packages/engine/Source/Scene/Cesium3DTileContentFactory.js)：内容类型分发。
-- [Model3DTileContent.js](../packages/engine/Source/Scene/Model/Model3DTileContent.js)：b3dm/i3dm/pnts/glTF 到 Model 管线的桥梁。
