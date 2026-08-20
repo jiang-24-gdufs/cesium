@@ -366,4 +366,4 @@ screenSpaceError = (geometricError × screenHeight) / (distance × sseDenominato
 | 请求调度与优先级 | `packages/engine/Source/Core/RequestScheduler.js` |
 | LRU 缓存策略 | `packages/engine/Source/Scene/Cesium3DTilesetCache.js` |
 | 样式语言解析 | `packages/engine/Source/Scene/Cesium3DTileStyle.js` |
-| 与 SuperMap S3M 对比 | 需单独分析 SuperMap iClient3D 的 S3MTilesLayer |
+| 与 SuperMap S3M 对比 | [CBD S3M 与 Cesium 3D Tiles：渲染原理、架构和断点对照](./s3m-rendering-vs-3dtiles-architecture.md) |

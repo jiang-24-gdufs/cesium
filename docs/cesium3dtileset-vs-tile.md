@@ -2,6 +2,27 @@
 
 > 基于当前仓库源码（`packages/engine/Source/Scene`）整理。本文中的“Tile 树”指 **3D Tiles 的逻辑层级**，不是 Cesium 地形/影像所使用的 `QuadtreeTile`。
 
+## 先读这一页：三个对象，三种问题
+
+如果第一次接触这部分源码，可以先暂时忽略 SSE、LRU、pass、implicit subtree 等术语，只记住下面的分工：
+
+```text
+Cesium3DTileset       管理整套数据：本帧看什么、请求什么、缓存什么
+Cesium3DTile          管理一个节点：在哪里、误差多大、父子是谁、状态如何
+Cesium3DTileContent   管理文件内容：下载后解析成模型、点云，或继续扩展树
+```
+
+用问题来对应对象会更容易：
+
+| 想回答的问题 | 先看哪个对象 |
+| --- | --- |
+| 为什么这个数据集请求/卸载了某些瓦片？ | `Cesium3DTileset` |
+| 为什么当前相机选中了这个节点而不是孩子？ | `Cesium3DTile` 的包围体、`geometricError`、`refine` 和可见性状态 |
+| `.b3dm` / `.pnts` 的字节如何变成模型或点云？ | `Cesium3DTileContent` 及其具体实现 |
+| 为什么已经下载了但还没有 DrawCommand？ | Tile 仍在 `PROCESSING`，或还没有进入本帧 `selectedTiles` |
+
+建议先读本文第 1～5 节的概念和调用链，再用第 6 节理解内容生命周期；二进制到 GPU 的细节另见[《3D Tiles：从 ArrayBuffer 到 DrawCommand》](./3dtiles-binary-to-draw-command.md)。
+
 ## 结论先行
 
 `Cesium3DTileset` 与 `Cesium3DTile` 不是同一层级的两个“瓦片”。前者是一个可加入 `scene.primitives` 的 **整个 3D Tiles 数据集运行时管理器**；后者是该数据集树中的 **一个逻辑节点**。一个 Tileset 有一个根 `Cesium3DTile`，并管理所有已知/已展开 Tile 的遍历、请求、缓存、样式和渲染。
