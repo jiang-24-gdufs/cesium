@@ -398,7 +398,7 @@ function App() {
   }, [codeState.dirty]);
 
   function openDocsPage() {
-    const docsUrl = "https://cesium.com/learn/cesiumjs/ref-doc/index.html";
+    const docsUrl = new URL("docs/index.html", window.location.href);
     window.open(docsUrl, "_blank")?.focus();
   }
 

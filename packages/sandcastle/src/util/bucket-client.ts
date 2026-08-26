@@ -14,7 +14,10 @@ declare global {
   }
 }
 
-const OUTER_ORIGIN = __OUTER_ORIGIN__;
+const OUTER_ORIGIN =
+  __OUTER_ORIGIN__ === "__RUNTIME_ORIGIN__"
+    ? window.location.origin
+    : __OUTER_ORIGIN__;
 
 /**
  * Apply and run sandcastle code to the page

@@ -8,10 +8,13 @@ import {
   MessageToApp,
 } from "./util/IframeBridge";
 
-const INNER_ORIGIN = __INNER_ORIGIN__;
+const INNER_ORIGIN =
+  __INNER_ORIGIN__ === "__RUNTIME_ORIGIN__"
+    ? location.origin
+    : __INNER_ORIGIN__;
 // This constructs urls like `[__INNER_ORIGIN__]/[pathname]/templates/bucket.html`
 // using location.pathname lets this adapt to deployed locations like CI
-const bucketUrl = `${new URL(`${location.pathname.replace(/[^\/]+.html/, "")}templates/bucket.html`, __INNER_ORIGIN__)}`;
+const bucketUrl = `${new URL(`${location.pathname.replace(/[^\/]+.html/, "")}templates/bucket.html`, INNER_ORIGIN)}`;
 
 export function Bucket({
   code,
