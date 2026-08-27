@@ -1,0 +1,6 @@
+title: SmartGIS - 绕中心旋转
+description: 相机围绕指定地理坐标点旋转，支持速度、方向调节和启停控制。
+labels:
+  - SmartGIS
+  - Showcases
+thumbnail: thumbnail.jpg

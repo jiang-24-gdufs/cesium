@@ -43,3 +43,10 @@ yarn.lock
 # Used in the CLA checking GitHub workflow
 GoogleConfig.json
 .vercel
+
+# SmartGIS 示例配套技术文档（不上传到 GitHub）
+/docs/smartgis-examples/
+
+# Generated at build time from CESIUM_ION_TOKEN; never commit credentials
+/packages/sandcastle/public/ion-config.js
+.env.local

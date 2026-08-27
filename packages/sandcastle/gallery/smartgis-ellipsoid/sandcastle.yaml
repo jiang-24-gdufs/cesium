@@ -1,0 +1,6 @@
+title: SmartGIS - 参考椭球体
+description: 展示 WGS84、正球、月球、火星等不同参考椭球体，演示坐标转换和法线计算。
+labels:
+  - SmartGIS
+  - Showcases
+thumbnail: thumbnail.jpg

@@ -1,0 +1,7 @@
+title: SmartGIS - 模型拾取
+description: 鼠标悬停拾取 glTF 模型，高亮轮廓显示，支持 pick 和 drillPick 两种模式。
+labels:
+  - SmartGIS
+  - Showcases
+  - Picking
+thumbnail: thumbnail.jpg

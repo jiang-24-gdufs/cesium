@@ -17,6 +17,30 @@ From the repository root:
 npx vercel --prod
 ```
 
+Before deploying, configure the Cesium ion token in the Vercel project. The
+build reads `CESIUM_ION_TOKEN` and generates an ignored runtime config file;
+the token is not stored in the repository:
+
+```sh
+npx vercel env add CESIUM_ION_TOKEN production
+npx vercel env add CESIUM_ION_TOKEN preview
+npx vercel env add CESIUM_ION_TOKEN development
+```
+
+For local Sandcastle builds, create `.env.local` from `.env.example`, then
+export the value before building (or source it with your preferred dotenv
+tool):
+
+```sh
+export CESIUM_ION_TOKEN="<your Cesium ion token>"
+node scripts/generateIonConfig.js
+npm run build-sandcastle -- --no-embeddings
+```
+
+`packages/sandcastle/public/ion-config.js` is generated and ignored. If the
+token is absent, local examples that use Cesium ion should show the normal
+unauthorized/missing-token behavior rather than embedding a fallback token.
+
 For a personal site, add the resulting Vercel project domain under a path such
 as `/cesium` in the site's navigation, or point a subdomain such as
 `cesium.example.com` at the Vercel project.

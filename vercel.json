@@ -1,5 +1,5 @@
 {
-  "buildCommand": "PROD=true npm run build-release && npm run build-ts && npm run build-docs && PROD=true SANDCASTLE_NO_EMBEDDINGS=1 SANDCASTLE_ORIGIN=__RUNTIME_ORIGIN__ npm run build-sandcastle -- --no-embeddings && cp -R Build/Documentation Build/Sandcastle2/docs",
+  "buildCommand": "node scripts/generateIonConfig.js && PROD=true npm run build-release && npm run build-ts && npm run build-docs && PROD=true SANDCASTLE_NO_EMBEDDINGS=1 SANDCASTLE_ORIGIN=__RUNTIME_ORIGIN__ npm run build-sandcastle -- --no-embeddings && cp -R Build/Documentation Build/Sandcastle2/docs",
   "outputDirectory": "Build/Sandcastle2",
   "installCommand": "npm install --ignore-scripts",
   "framework": null,

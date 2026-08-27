@@ -1,0 +1,6 @@
+title: SmartGIS - 飞行管理
+description: 相机飞行到指定坐标点，支持多航点顺序飞行、飞行取消和航线管理。
+labels:
+  - SmartGIS
+  - Showcases
+thumbnail: thumbnail.jpg

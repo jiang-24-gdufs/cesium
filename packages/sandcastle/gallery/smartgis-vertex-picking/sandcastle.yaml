@@ -1,0 +1,7 @@
+title: SmartGIS - 顶点拾取
+description: 演示椭球面、地形和场景三种坐标拾取方式，支持点击标记和坐标显示。
+labels:
+  - SmartGIS
+  - Showcases
+  - Picking
+thumbnail: thumbnail.jpg

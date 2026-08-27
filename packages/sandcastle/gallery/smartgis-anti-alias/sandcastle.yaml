@@ -1,0 +1,7 @@
+title: SmartGIS - 抗锯齿
+description: 对比 MSAA 和 FXAA 两种抗锯齿方案对场景渲染质量的影响。
+labels:
+  - SmartGIS
+  - Showcases
+  - Post Processing
+thumbnail: thumbnail.jpg

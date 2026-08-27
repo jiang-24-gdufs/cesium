@@ -1,0 +1,6 @@
+title: SmartGIS - 键盘漫游
+description: WASD/方向键控制相机移动，IJKL 控制视角旋转，支持速度调节和漫游启停。
+labels:
+  - SmartGIS
+  - Showcases
+thumbnail: thumbnail.jpg

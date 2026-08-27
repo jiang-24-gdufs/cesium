@@ -1,0 +1,6 @@
+title: SmartGIS - 创建视图
+description: 初始化 Cesium Viewer，演示场景模式切换、深度检测、光照控制和相机管理。
+labels:
+  - SmartGIS
+  - Showcases
+thumbnail: thumbnail.jpg

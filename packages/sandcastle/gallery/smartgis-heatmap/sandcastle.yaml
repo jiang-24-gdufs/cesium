@@ -1,0 +1,6 @@
+title: SmartGIS - 热力图
+description: 自研 Canvas 热力图渲染，将点数据聚合为径向渐变栅格并覆盖到地球表面。
+labels:
+  - SmartGIS
+  - Showcases
+thumbnail: thumbnail.jpg

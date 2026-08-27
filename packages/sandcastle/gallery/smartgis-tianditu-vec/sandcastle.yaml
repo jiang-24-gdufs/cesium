@@ -1,0 +1,6 @@
+title: SmartGIS - 天地图矢量底图
+description: 加载天地图矢量、影像、地形等 WMTS 图层，支持多图层叠加和注记。
+labels:
+  - SmartGIS
+  - Showcases
+thumbnail: thumbnail.jpg

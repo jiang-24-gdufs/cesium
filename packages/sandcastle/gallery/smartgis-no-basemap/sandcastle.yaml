@@ -1,0 +1,6 @@
+title: SmartGIS - 无底图
+description: 演示无底图模式下的 Viewer 初始化，支持动态加载和切换各类影像图层。
+labels:
+  - SmartGIS
+  - Showcases
+thumbnail: thumbnail.jpg

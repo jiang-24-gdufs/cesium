@@ -1,0 +1,7 @@
+title: SmartGIS - 雨效果
+description: 基于粒子系统模拟雨天效果，支持小雨/中雨/暴雨强度调节和大气参数联动。
+labels:
+  - SmartGIS
+  - Showcases
+  - Graphics
+thumbnail: thumbnail.jpg
