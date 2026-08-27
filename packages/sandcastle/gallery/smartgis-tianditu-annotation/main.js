@@ -1,6 +1,8 @@
 import * as Cesium from "cesium";
 import Sandcastle from "Sandcastle";
 
+Cesium.Ion.defaultAccessToken = window.CESIUM_ION_TOKEN || Cesium.Ion.defaultAccessToken;
+
 const TDT_TOKEN = window.TIANDITU_TOKEN || "";
 
 const viewer = new Cesium.Viewer("cesiumContainer", {

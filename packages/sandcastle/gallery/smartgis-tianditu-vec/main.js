@@ -1,6 +1,8 @@
 import * as Cesium from "cesium";
 import Sandcastle from "Sandcastle";
 
+Cesium.Ion.defaultAccessToken = window.CESIUM_ION_TOKEN || Cesium.Ion.defaultAccessToken;
+
 const TDT_TOKEN = window.TIANDITU_TOKEN || "";
 
 const viewer = new Cesium.Viewer("cesiumContainer", {
@@ -43,7 +45,7 @@ function addTiandituLayer(layerType, label) {
       '配置 TIANDITU_TOKEN 环境变量后重新构建<br>' +
         '申请地址: <span style="color:#4af">lbs.tianditu.gov.cn</span>',
     );
-    console.warn("天地图 Token 未配置，请在代码中修改 TDT_TOKEN");
+    console.warn("天地图 Token 未配置，请设置 TIANDITU_TOKEN 后重新构建");
     return;
   }
 

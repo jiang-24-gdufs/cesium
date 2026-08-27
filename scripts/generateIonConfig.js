@@ -14,8 +14,7 @@ await writeFile(
 );
 
 console.log(
-  token
-    token || tiandituToken
-      ? "Generated Cesium ion and TianDiTu runtime configuration."
-      : "Generated empty runtime configuration; set CESIUM_ION_TOKEN and/or TIANDITU_TOKEN to enable protected services.",
+  token || tiandituToken
+    ? "Generated Cesium ion and TianDiTu runtime configuration."
+    : "Generated empty runtime configuration; set CESIUM_ION_TOKEN and/or TIANDITU_TOKEN to enable protected services.",
 );

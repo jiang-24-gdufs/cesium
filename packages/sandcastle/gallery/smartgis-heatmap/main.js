@@ -1,7 +1,12 @@
 import * as Cesium from "cesium";
 import Sandcastle from "Sandcastle";
 
-const viewer = new Cesium.Viewer("cesiumContainer");
+Cesium.Ion.defaultAccessToken = window.CESIUM_ION_TOKEN || Cesium.Ion.defaultAccessToken;
+
+const viewer = new Cesium.Viewer("cesiumContainer", {
+  baseLayerPicker: false,
+  baseLayer: false,
+});
 
 const scene = viewer.scene;
 
@@ -89,6 +94,8 @@ function renderHeatmap(pointCount, radius, opacity) {
 
   const provider = new Cesium.SingleTileImageryProvider({
     url: canvas.toDataURL(),
+    tileWidth: 512,
+    tileHeight: 512,
     rectangle: Cesium.Rectangle.fromDegrees(
       bounds.west,
       bounds.south,

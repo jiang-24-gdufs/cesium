@@ -42,6 +42,9 @@ function createVideoScreen(videoUrl, position, width, height) {
 
   videoElement.src = videoUrl;
   videoElement.play().catch(function (err) {
+    if (err.name === "AbortError") {
+      return;
+    }
     statusPanel.innerHTML =
       `<b style="color:#f44">视频加载失败</b><br>${err.message}<br>` +
       "请确保视频 URL 可访问且支持 CORS";
