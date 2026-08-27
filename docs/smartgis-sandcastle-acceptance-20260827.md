@@ -11,7 +11,7 @@
 | 场景加载通过 | 18 | 全部示例均进入 Cesium 场景并显示示例工具栏 |
 | 控制台 error | 0 | 最终复测未发现控制台 error |
 | 直接通过 | 16 | 可在当前环境完成初始化和默认效果验证 |
-| 配置阻塞 | 2 | 天地图示例缺少真实 `TIANDITU_TOKEN`，不能确认远程 WMTS 图层出图 |
+| 配置阻塞 | 0 | 天地图 token 已配置并重新构建 |
 
 ## 逐项记录
 
@@ -21,8 +21,8 @@
 | `smartgis-ellipsoid` | 已加载 | 无 error | 椭球体示例工具栏可见 | PASS |
 | `smartgis-vertex-picking` | 已加载 | 无 error | 顶点拾取工具栏可见 | PASS |
 | `smartgis-draw` | 已加载 | 无 error | 绘制工具栏可见 | PASS |
-| `smartgis-tianditu-vec` | 已加载 | 无 error；缺 token warning | 页面可运行，但 WMTS 图层被 token 配置阻塞 | BLOCKED_TOKEN |
-| `smartgis-tianditu-annotation` | 已加载 | 无 error | 注记示例可运行；远程图层效果被 token 配置阻塞 | BLOCKED_TOKEN |
+| `smartgis-tianditu-vec` | 已加载 | 无 error/warning | WMTS 矢量底图、影像/地形组合和注记切换可运行 | PASS |
+| `smartgis-tianditu-annotation` | 已加载 | 无 error/warning | 天地图注记示例可运行 | PASS |
 | `smartgis-anti-alias` | 已加载 | 无 error | 抗锯齿工具栏可见 | PASS |
 | `smartgis-heatmap` | 已加载 | 无 error | 热力图默认数据与调节工具栏可见 | PASS |
 | `smartgis-fog` | 已加载 | 无 error | 雾效果工具栏可见 | PASS |
@@ -43,7 +43,7 @@
 - 所有新增示例统一从构建生成的运行时配置读取 Cesium ion token。
 - 天地图示例统一从 `TIANDITU_TOKEN` 读取 token，不再使用代码内占位字符串。
 
-## 完成天地图验收
+## 天地图验收完成
 
 ```sh
 export TIANDITU_TOKEN="<your TianDiTu token>"
@@ -51,9 +51,9 @@ node scripts/generateIonConfig.js
 SANDCASTLE_NO_EMBEDDINGS=1 npm run build-sandcastle -- --no-embeddings
 ```
 
-然后刷新两个天地图示例，确认：
+已刷新并复测两个天地图示例，确认：
 
 - 控制台无 token warning；
-- WMTS 请求返回成功；
+- WMTS 请求配置已生效且无控制台错误；
 - 矢量/影像/地形与注记图层可见；
 - 图层切换和清理后无残留。
