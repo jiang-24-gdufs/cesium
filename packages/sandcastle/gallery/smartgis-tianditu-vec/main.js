@@ -1,7 +1,7 @@
 import * as Cesium from "cesium";
 import Sandcastle from "Sandcastle";
 
-const TDT_TOKEN = "your_tianditu_token_here";
+const TDT_TOKEN = window.TIANDITU_TOKEN || "";
 
 const viewer = new Cesium.Viewer("cesiumContainer", {
   baseLayer: false,
@@ -37,10 +37,10 @@ function clearLayers() {
 }
 
 function addTiandituLayer(layerType, label) {
-  if (TDT_TOKEN === "your_tianditu_token_here") {
+  if (!TDT_TOKEN) {
     showStatus(
       '<b style="color:#f44">请配置天地图 Token</b><br>' +
-        '在 main.js 顶部修改 TDT_TOKEN 变量<br>' +
+      '配置 TIANDITU_TOKEN 环境变量后重新构建<br>' +
         '申请地址: <span style="color:#4af">lbs.tianditu.gov.cn</span>',
     );
     console.warn("天地图 Token 未配置，请在代码中修改 TDT_TOKEN");
@@ -91,10 +91,10 @@ Sandcastle.addToolbarButton("无底图", function () {
   showStatus("<b>无底图</b>");
 });
 
-if (TDT_TOKEN === "your_tianditu_token_here") {
+if (!TDT_TOKEN) {
   showStatus(
     '<b style="color:#f44">天地图 Token 未配置</b><br>' +
-      "请修改代码顶部的 TDT_TOKEN 变量<br>" +
+      "请配置 TIANDITU_TOKEN 环境变量后重新构建<br>" +
       '申请: <span style="color:#4af">lbs.tianditu.gov.cn</span>',
   );
 }

@@ -1,7 +1,7 @@
 import * as Cesium from "cesium";
 import Sandcastle from "Sandcastle";
 
-const TDT_TOKEN = "your_tianditu_token_here";
+const TDT_TOKEN = window.TIANDITU_TOKEN || "";
 
 const viewer = new Cesium.Viewer("cesiumContainer", {
   baseLayer: false,
@@ -41,10 +41,10 @@ function createTiandituProvider(layerType) {
 }
 
 function clearAndLoad(layers, label) {
-  if (TDT_TOKEN === "your_tianditu_token_here") {
+  if (!TDT_TOKEN) {
     showStatus(
       '<b style="color:#f44">天地图 Token 未配置</b><br>' +
-        "修改代码顶部 TDT_TOKEN 变量",
+        "配置 TIANDITU_TOKEN 环境变量后重新构建",
     );
     return;
   }
@@ -85,10 +85,10 @@ Sandcastle.addToolbarButton("切换注记透明度", function () {
   showStatus(`注记透明度: ${(annotationLayer.alpha * 100).toFixed(0)}%`);
 });
 
-if (TDT_TOKEN === "your_tianditu_token_here") {
+if (!TDT_TOKEN) {
   showStatus(
     '<b style="color:#f44">天地图 Token 未配置</b><br>' +
-      "修改代码顶部 TDT_TOKEN 变量<br>" +
+      "配置 TIANDITU_TOKEN 环境变量后重新构建<br>" +
       '申请: <span style="color:#4af">lbs.tianditu.gov.cn</span>',
   );
 }
