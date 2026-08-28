@@ -1,0 +1,6 @@
+title: SmartGIS - 位置编辑
+description: 拖拽移动 glTF 模型位置，支持高度调节和 CallbackProperty 实时更新。
+labels:
+  - SmartGIS
+  - Showcases
+thumbnail: thumbnail.jpg

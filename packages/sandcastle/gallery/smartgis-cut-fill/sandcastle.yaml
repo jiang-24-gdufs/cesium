@@ -1,0 +1,6 @@
+title: SmartGIS - 填挖方分析
+description: 基于设计面与现有地形的体积差计算填挖方量，栅格采样法估算。
+labels:
+  - SmartGIS
+  - Showcases
+thumbnail: thumbnail.jpg

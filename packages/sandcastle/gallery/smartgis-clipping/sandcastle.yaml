@@ -1,0 +1,6 @@
+title: SmartGIS - 面裁剪
+description: 对 Globe 或 3D Tileset 使用 ClippingPlane 进行面裁剪，支持多平面组合。
+labels:
+  - SmartGIS
+  - Showcases
+thumbnail: thumbnail.jpg

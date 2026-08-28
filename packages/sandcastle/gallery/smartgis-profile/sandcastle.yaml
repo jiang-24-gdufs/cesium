@@ -1,0 +1,6 @@
+title: SmartGIS - 剖面分析
+description: 沿路径采样地形高度生成距离-高程剖面图，使用 Canvas 绘制剖面曲线。
+labels:
+  - SmartGIS
+  - Showcases
+thumbnail: thumbnail.jpg

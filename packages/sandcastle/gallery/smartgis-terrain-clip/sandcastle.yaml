@@ -1,0 +1,6 @@
+title: SmartGIS - 地形开挖
+description: 对指定区域进行地形开挖，使用 ClippingPolygon 裁剪地形表面。
+labels:
+  - SmartGIS
+  - Showcases
+thumbnail: thumbnail.jpg

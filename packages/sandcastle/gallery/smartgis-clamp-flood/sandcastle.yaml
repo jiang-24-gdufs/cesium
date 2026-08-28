@@ -1,0 +1,6 @@
+title: SmartGIS - 淹没分析(贴地)
+description: 贴地模式的淹没分析，使用 GroundPrimitive 渲染淹没区域。
+labels:
+  - SmartGIS
+  - Showcases
+thumbnail: thumbnail.jpg

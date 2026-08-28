@@ -1,0 +1,44 @@
+import * as Cesium from "cesium";
+import Sandcastle from "Sandcastle";
+
+const viewer = new Cesium.Viewer("cesiumContainer", {
+  terrain: Cesium.Terrain.fromWorldTerrain(),
+  shouldAnimate: true,
+});
+const scene = viewer.scene;
+scene.globe.depthTestAgainstTerrain = true;
+
+scene.camera.setView({
+  destination: Cesium.Cartesian3.fromDegrees(113.3, 23.1, 10000),
+  orientation: { heading: 0, pitch: Cesium.Math.toRadians(-45), roll: 0 },
+});
+
+const statusPanel = document.createElement("div");
+statusPanel.style.cssText = "position:absolute;top:50px;left:10px;background:rgba(0,0,0,0.75);color:#fff;padding:8px 14px;border-radius:4px;font:13px monospace;pointer-events:none;z-index:10;line-height:1.6;max-width:300px;";
+document.getElementById("cesiumContainer").appendChild(statusPanel);
+function showStatus(t) { statusPanel.innerHTML = t; }
+
+showStatus("<b>KHR_materials_variants</b><br>难度: D4<br>核心: material variant switching<br>API: Model + variant API");
+
+
+Sandcastle.addDefaultToolbarButton("加载模型", function () {
+  viewer.entities.removeAll();
+  viewer.entities.add({
+    position: Cesium.Cartesian3.fromDegrees(113.3, 23.1, 100),
+    model: {
+      uri: "../../SampleData/models/CesiumMilkTruck/CesiumMilkTruck.glb",
+      minimumPixelSize: 64,
+      maximumScale: 200,
+    },
+  });
+  showStatus("<b>KHR_materials_variants</b><br>模型已加载<br>材质/编辑功能需 CustomShader 配置");
+});
+Sandcastle.addToolbarButton("清除", function () { viewer.entities.removeAll(); showStatus("<b>已清除</b>"); });
+
+
+Sandcastle.reset = function () {
+  viewer.entities.removeAll();
+  
+  
+  if (statusPanel.parentNode) statusPanel.parentNode.removeChild(statusPanel);
+};

@@ -1,0 +1,6 @@
+title: SmartGIS - 百度底图
+description: 百度地图瓦片加载演示，说明 BD09/GCJ-02/WGS84 坐标系差异与偏移问题。
+labels:
+  - SmartGIS
+  - Showcases
+thumbnail: thumbnail.jpg

@@ -1,0 +1,6 @@
+title: SmartGIS - WMS 单图加载
+description: OGC WMS 标准协议影像加载，演示 NASA 公共 WMS 服务的多图层切换。
+labels:
+  - SmartGIS
+  - Showcases
+thumbnail: thumbnail.jpg

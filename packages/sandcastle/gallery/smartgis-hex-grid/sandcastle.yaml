@@ -1,0 +1,6 @@
+title: SmartGIS - 六边形网格
+description: 地理范围离散为六边形网格，支持数值着色和 LOD。
+labels:
+  - SmartGIS
+  - Showcases
+thumbnail: thumbnail.jpg

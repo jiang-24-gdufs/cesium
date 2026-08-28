@@ -1,0 +1,6 @@
+title: SmartGIS - 倾斜压平
+description: 对倾斜摄影或 3D Tiles 进行局部压平处理，使用 ClippingPlane 实现。
+labels:
+  - SmartGIS
+  - Showcases
+thumbnail: thumbnail.jpg

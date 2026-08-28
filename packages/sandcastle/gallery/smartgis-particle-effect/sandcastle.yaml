@@ -1,0 +1,7 @@
+title: SmartGIS - 粒子特效
+description: 火焰、烟雾、火花等粒子系统特效，支持 ConeEmitter 和 SphereEmitter 两种发射器。
+labels:
+  - SmartGIS
+  - Showcases
+  - Graphics
+thumbnail: thumbnail.jpg

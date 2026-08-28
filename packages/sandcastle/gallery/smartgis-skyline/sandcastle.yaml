@@ -1,0 +1,6 @@
+title: SmartGIS - 天际线分析
+description: 提取建筑天际线轮廓，基于深度边缘检测后处理。
+labels:
+  - SmartGIS
+  - Showcases
+thumbnail: thumbnail.jpg

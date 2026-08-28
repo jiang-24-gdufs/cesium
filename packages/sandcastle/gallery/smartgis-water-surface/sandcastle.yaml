@@ -1,0 +1,7 @@
+title: SmartGIS - 水面效果
+description: 自研 GLSL 水面材质，通过正弦波叠加模拟水面动态波纹和高光。
+labels:
+  - SmartGIS
+  - Showcases
+  - Graphics
+thumbnail: thumbnail.jpg

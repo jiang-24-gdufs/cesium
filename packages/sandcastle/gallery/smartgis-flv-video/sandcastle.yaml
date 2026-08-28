@@ -1,0 +1,6 @@
+title: SmartGIS - 播放 FLV 视频流
+description: FLV 格式视频流解码播放，需要外部解码库支持。
+labels:
+  - SmartGIS
+  - Showcases
+thumbnail: thumbnail.jpg

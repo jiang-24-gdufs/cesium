@@ -1,0 +1,6 @@
+title: SmartGIS - 通视分析
+description: 自研通视分析，从观察点沿射线采样地形高度，判断目标点可见性并分段着色。
+labels:
+  - SmartGIS
+  - Showcases
+thumbnail: thumbnail.jpg

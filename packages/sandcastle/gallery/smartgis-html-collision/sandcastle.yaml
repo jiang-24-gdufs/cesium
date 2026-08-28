@@ -1,0 +1,6 @@
+title: SmartGIS - HTML 标注-碰撞
+description: 大量 HTML 标注的碰撞检测与遮挡剔除，按优先级贪心放置避免重叠。
+labels:
+  - SmartGIS
+  - Showcases
+thumbnail: thumbnail.jpg

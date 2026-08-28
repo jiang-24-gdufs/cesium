@@ -1,0 +1,6 @@
+title: SmartGIS - 地形抬升
+description: 对指定区域进行地形抬升效果模拟，通过高度偏移实现。
+labels:
+  - SmartGIS
+  - Showcases
+thumbnail: thumbnail.jpg

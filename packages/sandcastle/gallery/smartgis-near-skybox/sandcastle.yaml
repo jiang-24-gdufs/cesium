@@ -1,0 +1,6 @@
+title: SmartGIS - 近地天空盒
+description: 低空时替换为自定义天空盒纹理，基于相机高度自动切换近地/默认天空。
+labels:
+  - SmartGIS
+  - Showcases
+thumbnail: thumbnail.jpg

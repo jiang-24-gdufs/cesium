@@ -1,0 +1,6 @@
+title: SmartGIS - PBF 矢量样式数据
+description: 矢量数据样式化加载与渲染，演示 GeoJSON/TopoJSON 矢量数据的随机着色和 PBF 接入方式。
+labels:
+  - SmartGIS
+  - Showcases
+thumbnail: thumbnail.jpg

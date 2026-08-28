@@ -1,0 +1,6 @@
+title: SmartGIS - 离线数据(IndexedDB)
+description: 瓦片数据离线缓存到 IndexedDB，断网时自动回退读取本地缓存。
+labels:
+  - SmartGIS
+  - Showcases
+thumbnail: thumbnail.jpg

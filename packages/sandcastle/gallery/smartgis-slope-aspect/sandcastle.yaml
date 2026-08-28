@@ -1,0 +1,6 @@
+title: SmartGIS - 坡度坡向分析
+description: 基于地形法线计算坡度和坡向，使用颜色映射可视化分析结果。
+labels:
+  - SmartGIS
+  - Showcases
+thumbnail: thumbnail.jpg

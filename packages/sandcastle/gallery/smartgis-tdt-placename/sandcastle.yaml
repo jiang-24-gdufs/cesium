@@ -1,0 +1,6 @@
+title: SmartGIS - 天地图地名标注(三维)
+description: 三维场景中的地名标注，支持 Cesium Entity Label 和天地图注记瓦片两种方式。
+labels:
+  - SmartGIS
+  - Showcases
+thumbnail: thumbnail.jpg

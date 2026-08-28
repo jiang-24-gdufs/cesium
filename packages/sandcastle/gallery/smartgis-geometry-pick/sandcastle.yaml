@@ -1,0 +1,7 @@
+title: SmartGIS - 几何拾取
+description: 自研多边形/圆形空间查询，通过射线法判断点是否在查询区域内。
+labels:
+  - SmartGIS
+  - Showcases
+  - Picking
+thumbnail: thumbnail.jpg

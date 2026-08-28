@@ -1,0 +1,6 @@
+title: SmartGIS - 等高线分析
+description: 基于地形高度的等高线渲染，使用 PostProcessStage 或材质着色实现。
+labels:
+  - SmartGIS
+  - Showcases
+thumbnail: thumbnail.jpg

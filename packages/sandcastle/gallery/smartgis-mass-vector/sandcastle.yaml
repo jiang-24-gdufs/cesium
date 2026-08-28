@@ -1,0 +1,6 @@
+title: SmartGIS - 新海量矢量
+description: 大批量矢量数据加载与性能优化，使用 Primitive 批量渲染替代 Entity。
+labels:
+  - SmartGIS
+  - Showcases
+thumbnail: thumbnail.jpg

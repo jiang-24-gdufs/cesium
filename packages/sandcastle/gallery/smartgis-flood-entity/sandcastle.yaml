@@ -1,0 +1,6 @@
+title: SmartGIS - Entity 淹没
+description: 使用 Entity API 实现简易淹没效果，高度动态变化模拟水位上升。
+labels:
+  - SmartGIS
+  - Showcases
+thumbnail: thumbnail.jpg

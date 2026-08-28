@@ -1,0 +1,6 @@
+title: SmartGIS - 二维矢量瓦片底图
+description: GeoJSON/TopoJSON 矢量数据加载与矢量网格生成，支持贴地渲染和样式配置。
+labels:
+  - SmartGIS
+  - Showcases
+thumbnail: thumbnail.jpg

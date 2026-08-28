@@ -1,0 +1,6 @@
+title: SmartGIS - 多地形管理
+description: 多种地形源切换与对比，支持 Cesium World Terrain、ArcGIS 和自定义地形。
+labels:
+  - SmartGIS
+  - Showcases
+thumbnail: thumbnail.jpg

@@ -1,0 +1,6 @@
+title: SmartGIS - 环形特效
+description: 扩散圆环动态特效，使用 Primitive + 自定义材质实现雷达扫描效果。
+labels:
+  - SmartGIS
+  - Showcases
+thumbnail: thumbnail.jpg

@@ -1,0 +1,6 @@
+title: SmartGIS - 框选
+description: 屏幕空间矩形框选实体对象，通过坐标投影判断选中状态并高亮显示。
+labels:
+  - SmartGIS
+  - Showcases
+thumbnail: thumbnail.jpg

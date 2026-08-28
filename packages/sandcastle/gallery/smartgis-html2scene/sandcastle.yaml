@@ -1,0 +1,6 @@
+title: SmartGIS - HTML 渲染至场景
+description: HTML 内容通过 SVG foreignObject 渲染到 Canvas，再作为 Billboard 贴图到三维场景。
+labels:
+  - SmartGIS
+  - Showcases
+thumbnail: thumbnail.jpg

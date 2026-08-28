@@ -1,0 +1,6 @@
+title: SmartGIS - ArcGIS MapServer 4490
+description: ArcGIS MapServer 影像加载，演示 EPSG:4490 (CGCS2000) 与 4326 的兼容加载。
+labels:
+  - SmartGIS
+  - Showcases
+thumbnail: thumbnail.jpg

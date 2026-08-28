@@ -1,0 +1,6 @@
+title: SmartGIS - 绘制可编辑平面
+description: 交互式绘制四边形平面，支持角点拖拽编辑和 CallbackProperty 实时更新。
+labels:
+  - SmartGIS
+  - Showcases
+thumbnail: thumbnail.jpg

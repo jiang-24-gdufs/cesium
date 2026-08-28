@@ -1,0 +1,6 @@
+title: SmartGIS - 绘制可编辑立方体
+description: 创建三维立方体并支持拖拽移动和尺寸调节，演示 Box Entity 的交互式编辑。
+labels:
+  - SmartGIS
+  - Showcases
+thumbnail: thumbnail.jpg

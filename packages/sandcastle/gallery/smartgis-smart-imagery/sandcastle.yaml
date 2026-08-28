@@ -1,0 +1,6 @@
+title: SmartGIS - SmartImagery 影像
+description: 影像图层加载演示，展示 Cesium Ion/ArcGIS/OSM/TMS 等多种影像接入方式。
+labels:
+  - SmartGIS
+  - Showcases
+thumbnail: thumbnail.jpg

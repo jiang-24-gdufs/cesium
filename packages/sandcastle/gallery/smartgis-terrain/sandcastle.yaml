@@ -1,0 +1,6 @@
+title: SmartGIS - 公网地形
+description: Cesium World Terrain 加载与地形操作，支持高度采样、地形夸张、光照和法线。
+labels:
+  - SmartGIS
+  - Showcases
+thumbnail: thumbnail.jpg

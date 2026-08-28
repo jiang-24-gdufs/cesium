@@ -1,0 +1,6 @@
+title: SmartGIS - 缓冲分析
+description: 对点/线/面要素生成指定距离的缓冲区，使用椭球面采样生成缓冲多边形。
+labels:
+  - SmartGIS
+  - Showcases
+thumbnail: thumbnail.jpg
