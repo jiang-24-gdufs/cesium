@@ -148,7 +148,7 @@ Sandcastle.addToolbarButton("重置", () => {
   showStatus("<b>已重置</b>");
 });
 
-showStatus("<b>绘制可编辑平面</b><br>点击"绘制平面"开始");
+showStatus('<b>绘制可编辑平面</b><br>点击“绘制平面”开始');
 
 Sandcastle.reset = function () {
   if (handler) { handler.destroy(); handler = null; }

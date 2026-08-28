@@ -124,7 +124,7 @@ Sandcastle.addToolbarButton("重置", () => {
   createCube();
 });
 
-showStatus("<b>绘制可编辑立方体</b><br>点击"创建立方体"开始");
+showStatus('<b>绘制可编辑立方体</b><br>点击“创建立方体”开始');
 
 Sandcastle.reset = function () {
   if (handler) { handler.destroy(); handler = null; }
