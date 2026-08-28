@@ -47,7 +47,10 @@ function loadSandcastle(code: string, html: string, bridge: BridgeToApp) {
 
   const script = document.createElement("script");
   script.type = "module";
-  script.textContent = code;
+  script.textContent =
+    `import * as __sandcastleCesium from "cesium";\n` +
+    `if (window.CESIUM_ION_TOKEN) { __sandcastleCesium.Ion.defaultAccessToken = window.CESIUM_ION_TOKEN; }\n` +
+    code;
 
   // Module scripts execute asynchronously (imports must resolve first), so
   // appendChild returns before the module body runs. Wait for the script's

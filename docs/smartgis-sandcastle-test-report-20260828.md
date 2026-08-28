@@ -14,6 +14,7 @@
 | Gallery 索引 | 107/107 | 全部已进入 `Apps/Sandcastle2/gallery/list.json` |
 | JavaScript 语法 | 107/107 | 全量通过 `node --check` |
 | 浏览器重点复核 | 2/2 | 修复后的可编辑平面/立方体最终能创建 Cesium canvas |
+| ion token 注入复核 | 1/1 | 新会话中无默认 token warning、无 console error |
 | 明确占位实现 | 4 | FLV、视频投影、视锥投放、自定义视频投放仍是占位面 |
 | 高风险功能完整性 | 待整改 | 多个示例只有状态面板/标记实体，没有实现对应 SDK 功能 |
 
@@ -40,6 +41,12 @@
 - `smartgis-video-custom`
 
 这四项应标记为 `PARTIAL`，不能标记为 `PASS`。其中 FLV 播放还需要外部解码库或后端转码方案；如果坚持只使用开源 Cesium，则应把视频解码和纹理更新链路作为独立自研/开源依赖任务说明清楚。
+
+### 3. ion token 加载顺序已修复
+
+原先 `ion-config.js` 以模块脚本加载，且部分示例没有主动设置 `Cesium.Ion.defaultAccessToken`，会在 Viewer 初始化时触发默认 token warning。现在由 Sandcastle bucket-client 在执行每个示例代码前，用内部别名统一注入 token，避免与示例自身的 `Cesium` 变量冲突。
+
+浏览器新会话复核 `smartgis-editable-cube`：Cesium canvas 数量为 2，无默认 token warning，无 console error。
 
 ## 与 SmartGIS SDK 的功能完整性判断
 
@@ -80,4 +87,3 @@ node -e 'const fs=require("fs"),cp=require("child_process");const ds=fs.readdirS
 # 更新 Gallery 索引
 SANDCASTLE_NO_EMBEDDINGS=1 npm run build-sandcastle -- --no-embeddings
 ```
-
