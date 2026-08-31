@@ -74,8 +74,8 @@
 - [ ] HTML 标注-碰撞（基础标绘） — `#htmlPointCollection`
 - [ ] 近地天空盒（特色功能） — `#nearGroundSkyBox`
 - [ ] 粒子特效（环境模拟） — `#particleEffect`
-- [ ] 水面效果（环境模拟） — `#waterPrimitive`
-- [ ] 水面效果 2（环境模拟） — `#water`
+- [x] 水面效果（环境模拟） — `#waterPrimitive`（已测试 2026-08-31：Primitive 水面可见、交互通过、控制台无 error/warning）
+- [x] 水面效果 2（环境模拟） — `#water`（已测试 2026-08-31：Primitive 水面可见、交互通过、控制台无 error/warning）
 
 ### D2：中等难度 / 组合交互与基础计算
 
@@ -338,8 +338,8 @@
 - [ ] **P1** 雪 — `#snowEffect`
 - [ ] **P1** 雾 — `#fogEffect`
 - [ ] **P1** 粒子特效 — `#particleEffect`
-- [ ] **P1** 水面效果 — `#waterPrimitive`
-- [ ] **P1** 水面效果 2 — `#water`
+- [x] **P1** 水面效果 — `#waterPrimitive`（已测试 2026-08-31）
+- [x] **P1** 水面效果 2 — `#water`（已测试 2026-08-31）
 - [ ] **P1** 水体效果 — `#waterVolume`
 - [ ] **P2** 流体模拟 — `#fluidPrimitive`
 - [ ] **P2** 船闸通航 — `#fluidPrimitive2`

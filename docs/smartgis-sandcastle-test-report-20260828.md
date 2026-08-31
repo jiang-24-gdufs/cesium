@@ -87,3 +87,16 @@ node -e 'const fs=require("fs"),cp=require("child_process");const ds=fs.readdirS
 # 更新 Gallery 索引
 SANDCASTLE_NO_EMBEDDINGS=1 npm run build-sandcastle -- --no-embeddings
 ```
+
+## 水面示例专项复测（2026-08-31）
+
+本次按“两页同时打开、完成一组后关闭对应标签”的方式复测：
+
+| 示例 | 初测问题 | 修复内容 | 复测结果 |
+|---|---|---|---|
+| `smartgis-water-surface` | 点击“湖泊水面”触发 `Uncaught [object Object]` 与 `DeveloperError`，预览未完成效果初始化 | 将 Entity `polygon.material` 上错误使用的 `Cesium.Material` 改为 `Primitive + PolygonGeometry + MaterialAppearance`；使用自研 GLSL 正弦波材质，并清理旧 Primitive/`preRender` 监听 | **PASS**：湖泊水面可见；高度、颜色、清除按钮可操作；控制台 error/warning 为 0 |
+| `smartgis-water-surface2` | 初测未发现运行时错误 | 保持基于 Primitive 的实现，复核波速、波幅与清除操作 | **PASS**：水面可见；波速、波幅、清除按钮可操作；控制台 error/warning 为 0 |
+
+验收证据：两个页面均生成 2 个 Cesium canvas，预览不再停留在 `Loading...`；默认创建按钮和参数按钮均可点击，并通过截图确认水面几何体可见。每组验证结束后已关闭 2 个对应标签，未保留测试标签。
+
+核心原理：Entity 图形属性要求 `MaterialProperty`，不能直接接收渲染层 `Cesium.Material`。本次复刻使用开源 Cesium 的 `Primitive`、`GeometryInstance`、`PolygonGeometry`、`MaterialAppearance` 和 `Material` API；波纹由自研 GLSL 中的多组正弦函数驱动，时间通过 `scene.preRender` 更新，未使用 SmartGIS SDK 或其内置变量。

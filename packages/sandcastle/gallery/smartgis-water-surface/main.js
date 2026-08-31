@@ -24,18 +24,21 @@ function showStatus(text) {
   statusPanel.innerHTML = text;
 }
 
-let waterEntity = null;
+let waterPrimitive = null;
+let removeUpdateListener = null;
 let waterHeight = 10;
 let waterColor = new Cesium.Color(0.0, 0.3, 0.6, 0.6);
+let activeCoords = null;
+let activeName = "";
 
 const waterMaterialSource = `
   uniform vec4 waterColor;
-  uniform float time;
+  uniform float u_time;
   czm_material czm_getMaterial(czm_materialInput materialInput) {
     czm_material material = czm_getDefaultMaterial(materialInput);
     vec2 st = materialInput.st;
-    float wave1 = sin(st.x * 30.0 + time * 2.0) * 0.02;
-    float wave2 = sin(st.y * 25.0 + time * 1.5) * 0.015;
+    float wave1 = sin(st.x * 30.0 + u_time * 2.0) * 0.02;
+    float wave2 = sin(st.y * 25.0 + u_time * 1.5) * 0.015;
     float wave = wave1 + wave2;
     material.diffuse = waterColor.rgb + vec3(wave * 0.5);
     material.alpha = waterColor.a + wave * 0.2;
@@ -45,27 +48,65 @@ const waterMaterialSource = `
   }
 `;
 
-function createWater(coords, name) {
-  if (waterEntity) viewer.entities.remove(waterEntity);
+function removeWater() {
+  if (removeUpdateListener) {
+    removeUpdateListener();
+    removeUpdateListener = null;
+  }
+  if (waterPrimitive) {
+    scene.primitives.remove(waterPrimitive);
+    waterPrimitive = null;
+  }
+}
 
-  waterEntity = viewer.entities.add({
-    name: name,
-    polygon: {
-      hierarchy: Cesium.Cartesian3.fromDegreesArray(coords),
-      height: waterHeight,
-      material: new Cesium.Material({
-        fabric: {
-          type: "SmartGISWater",
-          uniforms: {
-            waterColor: waterColor,
-            time: 0,
-          },
-          source: waterMaterialSource,
+function createWater(coords, name) {
+  removeWater();
+  activeCoords = coords;
+  activeName = name;
+
+  const appearance = new Cesium.MaterialAppearance({
+    material: new Cesium.Material({
+      fabric: {
+        type: "SmartGISWater",
+        uniforms: {
+          waterColor: waterColor,
+          u_time: 0,
         },
+        source: waterMaterialSource,
+      },
+    }),
+    translucent: true,
+    closed: false,
+  });
+
+  waterPrimitive = scene.primitives.add(new Cesium.Primitive({
+    geometryInstances: new Cesium.GeometryInstance({
+      geometry: new Cesium.PolygonGeometry({
+        polygonHierarchy: new Cesium.PolygonHierarchy(
+          Cesium.Cartesian3.fromDegreesArray(coords),
+        ),
+        height: waterHeight,
       }),
-      outline: true,
-      outlineColor: Cesium.Color.WHITE.withAlpha(0.3),
+    }),
+    appearance: appearance,
+    asynchronous: false,
+  }));
+
+  viewer.camera.flyTo({
+    destination: Cesium.Cartesian3.fromDegrees(113.302, 23.106, 1800),
+    orientation: {
+      heading: Cesium.Math.toRadians(30),
+      pitch: Cesium.Math.toRadians(-45),
+      roll: 0,
     },
+  });
+
+  const startTime = Date.now();
+  removeUpdateListener = scene.preRender.addEventListener(() => {
+    if (waterPrimitive?.appearance?.material?.uniforms) {
+      waterPrimitive.appearance.material.uniforms.u_time =
+        (Date.now() - startTime) / 1000;
+    }
   });
 
   showStatus(
@@ -100,45 +141,43 @@ Sandcastle.addToolbarButton("河流水面", () => createWater(riverCoords, "河�
 
 Sandcastle.addToolbarButton("升高水面", () => {
   waterHeight += 5;
-  if (waterEntity) {
-    waterEntity.polygon.height = waterHeight;
+  if (activeCoords) {
+    createWater(activeCoords, activeName);
   }
   showStatus(`<b>水面高度:</b> ${waterHeight}m`);
 });
 
 Sandcastle.addToolbarButton("降低水面", () => {
   waterHeight = Math.max(0, waterHeight - 5);
-  if (waterEntity) {
-    waterEntity.polygon.height = waterHeight;
+  if (activeCoords) {
+    createWater(activeCoords, activeName);
   }
   showStatus(`<b>水面高度:</b> ${waterHeight}m`);
 });
 
 Sandcastle.addToolbarButton("深蓝色", () => {
   waterColor = new Cesium.Color(0.0, 0.15, 0.4, 0.7);
-  if (waterEntity) createWater(lakeCoords, "深蓝湖泊");
+  if (activeCoords) createWater(activeCoords, "深蓝" + activeName);
 });
 
 Sandcastle.addToolbarButton("浅绿色", () => {
   waterColor = new Cesium.Color(0.0, 0.4, 0.3, 0.5);
-  if (waterEntity) createWater(lakeCoords, "浅绿湖泊");
+  if (activeCoords) createWater(activeCoords, "浅绿" + activeName);
 });
 
 Sandcastle.addToolbarButton("清除", () => {
-  if (waterEntity) {
-    viewer.entities.remove(waterEntity);
-    waterEntity = null;
-  }
+  removeWater();
+  activeCoords = null;
+  activeName = "";
   showStatus("<b>水面已清除</b>");
 });
 
 showStatus("<b>水面效果</b><br>选择水体类型查看效果");
 
 Sandcastle.reset = function () {
-  if (waterEntity) {
-    viewer.entities.remove(waterEntity);
-    waterEntity = null;
-  }
+  removeWater();
+  activeCoords = null;
+  activeName = "";
   viewer.entities.removeAll();
   scene.globe.enableLighting = false;
   if (statusPanel.parentNode) statusPanel.parentNode.removeChild(statusPanel);
