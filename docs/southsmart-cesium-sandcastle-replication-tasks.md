@@ -74,8 +74,8 @@
 - [ ] HTML 标注-碰撞（基础标绘） — `#htmlPointCollection`
 - [ ] 近地天空盒（特色功能） — `#nearGroundSkyBox`
 - [ ] 粒子特效（环境模拟） — `#particleEffect`
-- [x] 水面效果（环境模拟） — `#waterPrimitive`（已测试 2026-08-31：Primitive 水面可见、交互通过、控制台无 error/warning）
-- [x] 水面效果 2（环境模拟） — `#water`（已测试 2026-08-31：Primitive 水面可见、交互通过、控制台无 error/warning）
+- [x] 水面效果（环境模拟） — `#waterPrimitive`（SDK 对齐复测 2026-08-31：官方顶点/相机/参数语义，自研 Fresnel+波纹+环境反射；交互通过、控制台无 error）
+- [x] 水面效果 2（环境模拟） — `#water`（SDK 对齐复测 2026-08-31：直接使用开源 Cesium Water 材质链路；创建/频率/波幅交互通过、控制台无 error）
 
 ### D2：中等难度 / 组合交互与基础计算
 
@@ -338,8 +338,8 @@
 - [ ] **P1** 雪 — `#snowEffect`
 - [ ] **P1** 雾 — `#fogEffect`
 - [ ] **P1** 粒子特效 — `#particleEffect`
-- [x] **P1** 水面效果 — `#waterPrimitive`（已测试 2026-08-31）
-- [x] **P1** 水面效果 2 — `#water`（已测试 2026-08-31）
+- [x] **P1** 水面效果 — `#waterPrimitive`（SDK 对齐验收通过，2026-08-31）
+- [x] **P1** 水面效果 2 — `#water`（SDK 对齐验收通过，2026-08-31）
 - [ ] **P1** 水体效果 — `#waterVolume`
 - [ ] **P2** 流体模拟 — `#fluidPrimitive`
 - [ ] **P2** 船闸通航 — `#fluidPrimitive2`

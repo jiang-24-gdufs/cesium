@@ -88,15 +88,33 @@ node -e 'const fs=require("fs"),cp=require("child_process");const ds=fs.readdirS
 SANDCASTLE_NO_EMBEDDINGS=1 npm run build-sandcastle -- --no-embeddings
 ```
 
-## 水面示例专项复测（2026-08-31）
+## 水面示例 SDK 对齐复测（2026-08-31）
 
-本次按“两页同时打开、完成一组后关闭对应标签”的方式复测：
+对比来源：[`waterPrimitive`](https://southsmart.com/developer-center/products/Web/SDK/examples/waterPrimitive.html#waterPrimitive) 与 [`water`](https://southsmart.com/developer-center/products/Web/SDK/examples/water.html#water)。本次不引入 SmartGIS SDK、内部变量或其渲染对象；所有功能均由开源 Cesium 和自研 GLSL 实现。
 
-| 示例 | 初测问题 | 修复内容 | 复测结果 |
-|---|---|---|---|
-| `smartgis-water-surface` | 点击“湖泊水面”触发 `Uncaught [object Object]` 与 `DeveloperError`，预览未完成效果初始化 | 将 Entity `polygon.material` 上错误使用的 `Cesium.Material` 改为 `Primitive + PolygonGeometry + MaterialAppearance`；使用自研 GLSL 正弦波材质，并清理旧 Primitive/`preRender` 监听 | **PASS**：湖泊水面可见；高度、颜色、清除按钮可操作；控制台 error/warning 为 0 |
-| `smartgis-water-surface2` | 初测未发现运行时错误 | 保持基于 Primitive 的实现，复核波速、波幅与清除操作 | **PASS**：水面可见；波速、波幅、清除按钮可操作；控制台 error/warning 为 0 |
+### SDK 实现与本地实现对照
 
-验收证据：两个页面均生成 2 个 Cesium canvas，预览不再停留在 `Loading...`；默认创建按钮和参数按钮均可点击，并通过截图确认水面几何体可见。每组验证结束后已关闭 2 个对应标签，未保留测试标签。
+| SDK 示例 | 官方实现要点 | 本地开源复刻 | 核心 API / 原理 | 结论 |
+|---|---|---|---|---|
+| `#waterPrimitive` | `smart3d.WaterPrimitive` 以九个经纬度顶点和 `height=14.6` 创建水面；使用法线纹理、反射纹理、Fresnel 反射及高斯模糊；暴露显隐、高度、尺寸、反射基数、倒影扭曲、模糊、透明度 | `smartgis-water-surface` 使用相同顶点、默认高度、相机姿态与同语义参数；自研多组正弦波法线、Fresnel（`rf0 + (1-rf0)(1-cosθ)^5`）、天空/太阳环境反射近似和模糊衰减；参数面板可实时重建几何/材质 | `Primitive`、`GeometryInstance`、`PolygonGeometry`、`MaterialAppearance`、`Material`、`scene.preRender` | **PASS（功能/交互等效）**。不复制 SDK 的私有反射帧缓冲，因而与其“真实场景反射纹理”不做像素级等同；本地采用自研环境反射以满足开源约束。 |
+| `#water` | `smart3d.Water.createWaterPrimitive` 对 `PolygonGeometry` 封装 Cesium Water 材质，默认 `height=13.61`、`baseWaterColor=#123e5980`、`frequency=5000` | `smartgis-water-surface2` 直接使用 Cesium 内置 `Material.fromType("Water")`，保留相同顶点、高度、基础水色、频率和官方相机姿态；支持创建、频率、波幅、清除 | `Material.WaterType`、`Material.fromType("Water")`、`PolygonGeometry`、`MaterialAppearance` | **PASS（渲染链路对齐）**。该 SDK 示例本质上是对 Cesium 原生 Water 材质的封装，本地直接使用开源底层 API。 |
 
-核心原理：Entity 图形属性要求 `MaterialProperty`，不能直接接收渲染层 `Cesium.Material`。本次复刻使用开源 Cesium 的 `Primitive`、`GeometryInstance`、`PolygonGeometry`、`MaterialAppearance` 和 `Material` API；波纹由自研 GLSL 中的多组正弦函数驱动，时间通过 `scene.preRender` 更新，未使用 SmartGIS SDK 或其内置变量。
+### 本次修复
+
+1. 原始 `water-surface` 把渲染层 `Cesium.Material` 交给 Entity 图形属性，产生 `DeveloperError`。已改为 Primitive 渲染路径。
+2. Sandcastle 在加载完成时自动调用 `Sandcastle.reset()`；旧 reset 会删除刚注入的状态/参数面板，因此会造成“页面没有功能”的假象。现在 reset 只释放水面 Primitive，默认操作随后重建水面，面板与状态保持可用。
+3. 两个示例使用官方水域的九个顶点以及官方固定相机姿态，避免此前广州占位坐标与镜头过远造成的明显视觉差异。
+
+### 验收记录
+
+按“两页成组打开、完成后关闭标签”的流程进行。为避免本地 Sandcastle mirror 在并发加载时偶发资源竞争，最终验收保持两页同时存在但错开加载。
+
+| 检查项 | `smartgis-water-surface` | `smartgis-water-surface2` |
+|---|---:|---:|
+| Cesium canvas | 2 | 2 |
+| 控制台 error | 0 | 0 |
+| 默认效果 | 水面与参数面板已创建 | 水面 Primitive 已创建 |
+| 交互 | 高度改为 18m、波纹尺寸改为 120，状态同步更新 | 执行创建、增大频率、增大波幅，状态同步更新 |
+| 标签清理 | 已关闭 | 已关闭 |
+
+面试复盘重点：`Water` 材质适合标准波纹、法线扰动与高光；当需求包含可控 Fresnel、反射率基数和倒影模糊时，应从 `Material` 自定义 GLSL 进入。SDK 的“反射纹理”是一个独立的场景捕获问题，而不是普通材质参数；在不使用其 SDK 的前提下，需要自行实现离屏反射 Pass，或像本示例一样采用可控的环境反射近似。
