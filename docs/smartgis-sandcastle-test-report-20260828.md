@@ -118,3 +118,34 @@ SANDCASTLE_NO_EMBEDDINGS=1 npm run build-sandcastle -- --no-embeddings
 | 标签清理 | 已关闭 | 已关闭 |
 
 面试复盘重点：`Water` 材质适合标准波纹、法线扰动与高光；当需求包含可控 Fresnel、反射率基数和倒影模糊时，应从 `Material` 自定义 GLSL 进入。SDK 的“反射纹理”是一个独立的场景捕获问题，而不是普通材质参数；在不使用其 SDK 的前提下，需要自行实现离屏反射 Pass，或像本示例一样采用可控的环境反射近似。
+
+## 流体模拟 SDK 对齐复刻（2026-08-31）
+
+对照代码为 SmartGIS `#fluidPrimitive` 示例。该示例直接实例化 `Cesium.FluidPrimitive`、`FluidPrimitiveShadingType` 和 `addFluidDrop`；这些 API 不存在于开源 Cesium，因此原有本地 `smartgis-fluid-sim` 的“矩形高度正弦动画”不能视作复刻。
+
+### 实现结果
+
+| 能力 | 本地实现 | 核心原理/API |
+|---|---|---|
+| 流体状态 | 48×48 规则网格，维护水深 `h` 与二维速度 `u/v` | `Float32Array`、有限差分、质量通量更新、重力项、阻尼边界 |
+| 注入流体 | 点击水域或“中心注水”按体积、半径、持续速度注入高斯分布水深 | `ScreenSpaceEventHandler`、ENU 坐标转换、`scene.preRender` |
+| 地形基准 | 25×25 terrain 采样后双线性插值到动态网格，水面随地形高程构建 | `sampleTerrainMostDetailed`、`Cartographic`、`Transforms.eastNorthUpToFixedFrame` |
+| 大坝与边界 | 网格掩码形成带闸口的大坝；可见大坝网格与水流绕行场景 | `Uint8Array` 固体掩码、`Entity.box` |
+| 水面与调试视图 | 水体、简单水面、流向、法线、深度、速度、风格化视图；可选流向箭头 | `Geometry`、`GeometryAttribute`、`Primitive`、`MaterialAppearance`、自研 GLSL、`PolylineCollection` |
+| 生命周期 | 新网格 ready 前保留上一帧，避免动态 Primitive 重建闪烁 | `scene.postRender`、Primitive 资源回收 |
+
+这是一版 CPU 求解器，优先保证可读性、可调试性和面试可讲解性；未假称使用 GPU ping-pong。后续性能升级可以把 `h/u/v` 三个状态场迁移为浮点 Framebuffer 的 ping-pong 纹理，而不改变交互与渲染层接口。
+
+### 浏览器验收
+
+| 检查项 | 结果 |
+|---|---|
+| 默认启动与地形采样 | PASS：参数面板、水面动态网格、作用域外框和大坝均可见 |
+| 水体视图 | PASS：贴地水面与波纹材质可见 |
+| 流体流向视图 | PASS：切换后水面保持可见，流向箭头可见 |
+| 中心注水 | PASS：点击后状态进入“待注入: 1”，最大水深由约 3m 增至 9.63m |
+| 暂停/恢复 | PASS：状态文本在“已暂停 / 运行中”间正确切换 |
+| 浏览器控制台 | PASS：最终稳定性验收无 console error，两个 Cesium canvas 均已创建 |
+| 测试标签 | 已关闭 |
+
+面试复盘重点：先在 ENU 局部坐标中做数值更新，再映射回 ECEF 构建 Cesium 网格；时间步长要受 CFL 条件约束。这里的地形采样只负责渲染基准，若要达到工程级洪水演算，需要继续把地形坡度、通量限制器、干湿边界与真实边界流量纳入求解器。

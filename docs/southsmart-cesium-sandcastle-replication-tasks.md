@@ -136,7 +136,7 @@
 - [ ] 视频流投影（视频相关） — `#videoShadow`
 - [ ] 视锥视频投放（视频相关） — `#videoPut`
 - [ ] 视频投放-自定义（视频相关） — `#videoPut-custom`
-- [ ] 流体模拟（环境模拟） — `#fluidPrimitive`
+- [x] 流体模拟（环境模拟） — `#fluidPrimitive`（SDK 对齐复刻 2026-08-31：自研浅水方程、地形采样、注水、大坝掩码与流向调试视图；浏览器验收通过）
 - [ ] 船闸通航（环境模拟） — `#fluidPrimitive2`
 - [ ] 大坝泄水（环境模拟） — `#fluidPrimitive3`
 - [ ] 水质污染模型（环境模拟） — `#hydroPrimitive`
@@ -341,7 +341,7 @@
 - [x] **P1** 水面效果 — `#waterPrimitive`（SDK 对齐验收通过，2026-08-31）
 - [x] **P1** 水面效果 2 — `#water`（SDK 对齐验收通过，2026-08-31）
 - [ ] **P1** 水体效果 — `#waterVolume`
-- [ ] **P2** 流体模拟 — `#fluidPrimitive`
+- [x] **P2** 流体模拟 — `#fluidPrimitive`（自研浅水方程验收通过，2026-08-31）
 - [ ] **P2** 船闸通航 — `#fluidPrimitive2`
 - [ ] **P2** 大坝泄水 — `#fluidPrimitive3`
 - [ ] **P2** 水质污染模型 — `#hydroPrimitive`
